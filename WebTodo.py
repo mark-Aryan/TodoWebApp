@@ -8,7 +8,7 @@ def add_todo():
     new_todo = st.session_state["new_todo"] + "\n"
     todos.append(new_todo)
     functions.write_todos(todos)
-
+    st.session_state["new_todo"] = ""
 
 st.title("WebTodoGUI")
 st.subheader("This is my Todo app.")
@@ -22,5 +22,6 @@ for index, todo in enumerate(todos):
         st.experimental_rerun()
 
 st.text_input(label="", placeholder="Add new todo...", on_change=add_todo, key="new_todo")
+
 
 st.info("Created by: Aryan Kumar Upadhyay")
