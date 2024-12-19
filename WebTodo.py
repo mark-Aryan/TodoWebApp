@@ -17,13 +17,15 @@ if "new_todo" not in st.session_state:
 st.title("WebTodoGUI")
 st.subheader("This is my Todo app.")
 
-# Display todos with unique keys
+# Display todos with sanitized keys
 for index, todo in enumerate(todos):
-    checkbox = st.checkbox(todo, key=f"{todo}_{index}")
+    # Use a sanitized key to avoid errors
+    sanitized_key = f"todo_{index}"
+    checkbox = st.checkbox(todo.strip(), key=sanitized_key)
     if checkbox:
         todos.pop(index)
         functions.write_todos(todos)
-        del st.session_state[f"{todo}_{index}"]
+        del st.session_state[sanitized_key]
         st.experimental_rerun()
 
 st.text_input(label="", placeholder="Add new todo...", on_change=add_todo, key="new_todo")
